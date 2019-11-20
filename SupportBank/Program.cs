@@ -34,14 +34,6 @@ namespace SupportBank
 
             //Create accounts for each user and how much they own using a dictionary
 
-            foreach (string element in peopleThatOwnMoney)
-            {
-                if (accountNameAndMoney.ContainsKey(element) == false)
-                {
-                    accountNameAndMoney.Add(element, 0);
-                }
-            }
-
 
             foreach (KeyValuePair<string, float> key in accountNameAndMoney)
             {
