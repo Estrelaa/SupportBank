@@ -11,7 +11,14 @@ namespace SupportBank
         {
             //Variables needed
             List<string> contentofFileSplit = new List<string>();
-            List<string> Record = new List<string>();
+
+            /*Theses list and the element number match the same transaction,
+             * for example element [2] on all the lists make one transaction
+             */
+            List<string> dateOfTransaction = new List<string>();
+            List<string> peopleThatOwnMoney = new List<string>();
+            List<string> PeopleThatAreOwnedMoney = new List<string>();
+            List<string> howMuchTheyAreOwned = new List<string>();
 
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             string[] contentsOfFile = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv");
@@ -21,10 +28,14 @@ namespace SupportBank
             contentofFileSplit = convertContentsToOneString.Split(",").ToList();
 
 
-            parseContentForValues(contentofFileSplit, 1, Record);
+            //Run parser for every needed colum
+            parseContentForValues(contentofFileSplit, 1, dateOfTransaction);
+            parseContentForValues(contentofFileSplit, 2, peopleThatOwnMoney);
+            parseContentForValues(contentofFileSplit, 3, PeopleThatAreOwnedMoney);
+            parseContentForValues(contentofFileSplit, 4, howMuchTheyAreOwned);
 
-            //accountName.ForEach(Console.WriteLine);
 
+            //Stops the console from closing
             Console.ReadLine();
 
         }
