@@ -1,7 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SupportBank
 {
@@ -10,20 +11,34 @@ namespace SupportBank
         static void Main(string[] args)
         {
             //Variables needed
-            List<string> contentofFileSplit = new List<string>();
+            List<string> contentofFileWhenSplit = new List<string>();
             Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
             string userInput = "";
+            string accountNameTofind = "Jon A";
 
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             string[] contentsOfFile = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv");
             string convertContentsToOneString = string.Join(",", contentsOfFile);
 
             //Split the long string so every value in the .csv is its own element
-            contentofFileSplit = convertContentsToOneString.Split(",").ToList();
+            contentofFileWhenSplit = convertContentsToOneString.Split(",").ToList();
 
             //Run parser
-            parseContentForValues(contentofFileSplit, 1, accountNameAndMoney);
+            parseContentForValues(contentofFileWhenSplit, 1, accountNameAndMoney);
 
+
+
+
+            //Regex to find the given name in the file
+            Regex findAccountName = new Regex(@"" + accountNameTofind + "", RegexOptions.IgnoreCase);
+
+            foreach (Match nameFoundInTransaction in findAccountName.Matches(contentsOfFile.ToString()))
+            {
+                Console.WriteLine("match found");
+            }
+
+
+            //Output to the console
             userInput = OutputData(accountNameAndMoney);
 
         }
@@ -40,7 +55,7 @@ namespace SupportBank
                 Console.WriteLine("Input command: ");
                 try
                 {
-                    userInput = Console.ReadLine().ToLower();
+                    userInput = Console.ReadLine();
                     break;
                 }
                 catch (IOException)
@@ -51,7 +66,7 @@ namespace SupportBank
 
             Console.WriteLine("");
 
-            if (userInput == "list all")
+            if (userInput == "List All")
             {
                 foreach (KeyValuePair<string, float> key in accountNameAndMoney)
                 {
@@ -64,6 +79,7 @@ namespace SupportBank
                         Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
                     }
                 }
+
 
             }
             //Stops the console from closing
