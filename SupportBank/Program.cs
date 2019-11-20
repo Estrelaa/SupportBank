@@ -29,38 +29,58 @@ namespace SupportBank
 
 
             //Run parser for every needed colum
-            parseContentForValues(contentofFileSplit, 2, peopleThatOwnMoney);
-            parseContentForValues(contentofFileSplit, 3, PeopleThatAreOwnedMoney);
-            parseContentForValues(contentofFileSplit, 4, howMuchTheyAreOwned);
+            parseContentForValues(contentofFileSplit, 1, accountNameAndMoney);
+
 
             //Create accounts for each user and how much they own using a dictionary
 
             foreach (string element in peopleThatOwnMoney)
             {
-                try
+                if (accountNameAndMoney.ContainsKey(element) == false)
                 {
-                    accountNameAndMoney.Add(element,0);
-                }
-                catch (ArgumentException)
-                {
-
+                    accountNameAndMoney.Add(element, 0);
                 }
             }
 
 
+            foreach (KeyValuePair<string, float> key in accountNameAndMoney)
+            {
+                Console.WriteLine("{0} ", key);
+            }
             //Stops the console from closing
             Console.ReadLine();
 
         }
 
-        private static void parseContentForValues(List<string> contentofFileSplit, int ColumNumber,
-            List<string> variableToHoldRecords)
+        private static void parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
+            Dictionary<string, float> accountNameAndMoney)
         {
-            for (int i = 1; i < contentofFileSplit.Count; i++)
+            for (int i = 0; i < contentofFileSplit.Count; i++)
             {
-                if (i % 5 == ColumNumber)
+                float temp = 0;
+                if (i % 5 == FromColumNumber)
                 {
-                    variableToHoldRecords.Add(contentofFileSplit[i]);
+                    try
+                    {
+                        temp = float.Parse(contentofFileSplit[i + 3]);
+                    }
+                    catch
+                    {
+
+                    }
+                    // if they are not in the dictionary, add them
+                    if (accountNameAndMoney.ContainsKey(contentofFileSplit[i]) == false)
+                    {
+                        accountNameAndMoney.Add(contentofFileSplit[i], 0);
+                    }
+                    if (accountNameAndMoney.ContainsKey(contentofFileSplit[i + 1]) == false)
+                    {
+                        accountNameAndMoney.Add(contentofFileSplit[i + 1], 0);
+                    }
+
+                    // update their accounts
+                    accountNameAndMoney[contentofFileSplit[i]] = accountNameAndMoney[contentofFileSplit[i]] + temp;
+                    accountNameAndMoney[contentofFileSplit[i + 1]] = accountNameAndMoney[contentofFileSplit[i + 1]] - temp;
                 }
 
             }
