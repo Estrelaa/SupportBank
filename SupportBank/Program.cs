@@ -12,13 +12,7 @@ namespace SupportBank
             //Variables needed
             List<string> contentofFileSplit = new List<string>();
             Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
-
-            /*Theses list and the element number match the same transaction,
-             * for example element [2] on all the lists make one transaction
-             */
-            List<string> peopleThatOwnMoney = new List<string>();
-            List<string> PeopleThatAreOwnedMoney = new List<string>();
-            List<string> howMuchTheyAreOwned = new List<string>();
+            string userInput = "";
 
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             string[] contentsOfFile = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv");
@@ -27,26 +21,54 @@ namespace SupportBank
             //Split the long string so every value in the .csv is its own element
             contentofFileSplit = convertContentsToOneString.Split(",").ToList();
 
-
             //Run parser
             parseContentForValues(contentofFileSplit, 1, accountNameAndMoney);
 
+            userInput = OutputData(accountNameAndMoney);
 
-            foreach (KeyValuePair<string, float> key in accountNameAndMoney)
+        }
+
+        private static string OutputData(Dictionary<string, float> accountNameAndMoney)
+        {
+            string userInput;
+            while (true)
             {
-                if (key.Value > -0)
+                Console.WriteLine("Commands are: ");
+                Console.WriteLine("List All: output the names of each person, and the total amount they owe, or are owed.");
+                Console.WriteLine("List [Name Of Person]: print a list of every transaction, with the date and narrative, for that account with that name.");
+                Console.WriteLine("");
+                Console.WriteLine("Input command: ");
+                try
                 {
-                    Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
+                    userInput = Console.ReadLine().ToLower();
+                    break;
                 }
-                else
+                catch (IOException)
                 {
-                    Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
+                    Console.WriteLine("Invaild input, only 'List All' and 'List[Name of person you are looking for] are vaild!");
                 }
-                
+            }
+
+            Console.WriteLine("");
+
+            if (userInput == "list all")
+            {
+                foreach (KeyValuePair<string, float> key in accountNameAndMoney)
+                {
+                    if (key.Value > -0)
+                    {
+                        Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
+                    }
+                }
+
             }
             //Stops the console from closing
             Console.ReadLine();
-
+            return userInput;
         }
 
         private static void parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
