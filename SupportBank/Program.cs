@@ -36,11 +36,11 @@ namespace SupportBank
             {
                 if (key.Value > -0)
                 {
-                    Console.WriteLine("{0} is owned £{1}", key.Key, key.Value);
+                    Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
                 }
                 else
                 {
-                    Console.WriteLine("{0} own £{1}", key.Key, key.Value);
+                    Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
                 }
                 
             }
