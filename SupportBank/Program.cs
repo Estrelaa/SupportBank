@@ -11,11 +11,11 @@ namespace SupportBank
         {
             //Variables needed
             List<string> contentofFileSplit = new List<string>();
+            Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
 
             /*Theses list and the element number match the same transaction,
              * for example element [2] on all the lists make one transaction
              */
-            List<string> dateOfTransaction = new List<string>();
             List<string> peopleThatOwnMoney = new List<string>();
             List<string> PeopleThatAreOwnedMoney = new List<string>();
             List<string> howMuchTheyAreOwned = new List<string>();
@@ -29,10 +29,23 @@ namespace SupportBank
 
 
             //Run parser for every needed colum
-            parseContentForValues(contentofFileSplit, 1, dateOfTransaction);
             parseContentForValues(contentofFileSplit, 2, peopleThatOwnMoney);
             parseContentForValues(contentofFileSplit, 3, PeopleThatAreOwnedMoney);
             parseContentForValues(contentofFileSplit, 4, howMuchTheyAreOwned);
+
+            //Create accounts for each user and how much they own using a dictionary
+
+            foreach (string element in peopleThatOwnMoney)
+            {
+                try
+                {
+                    accountNameAndMoney.Add(element,0);
+                }
+                catch (ArgumentException)
+                {
+
+                }
+            }
 
 
             //Stops the console from closing
