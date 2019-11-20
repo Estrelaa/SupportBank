@@ -28,16 +28,21 @@ namespace SupportBank
             contentofFileSplit = convertContentsToOneString.Split(",").ToList();
 
 
-            //Run parser for every needed colum
+            //Run parser
             parseContentForValues(contentofFileSplit, 1, accountNameAndMoney);
-
-
-            //Create accounts for each user and how much they own using a dictionary
 
 
             foreach (KeyValuePair<string, float> key in accountNameAndMoney)
             {
-                Console.WriteLine("{0} ", key);
+                if (key.Value > -0)
+                {
+                    Console.WriteLine("{0} is owned £{1}", key.Key, key.Value);
+                }
+                else
+                {
+                    Console.WriteLine("{0} own £{1}", key.Key, key.Value);
+                }
+                
             }
             //Stops the console from closing
             Console.ReadLine();
