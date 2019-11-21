@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SupportBank
 {
-    class parseAccounts
+    class ParseAccounts
     {
         // Variables For the method to run        
         public Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
@@ -14,17 +12,15 @@ namespace SupportBank
         {
             for (int i = 0; i < contentofFileSplit.Count; i++)
             {
-                float temp = 0;
+                float moneyInTransaction = 0;
                 if (i % 5 == FromColumNumber)
                 {
-                    //try to get the money of this transaction, convert it to a float and save it.
                     try
                     {
-                        temp = float.Parse(contentofFileSplit[i + 3]);
+                        moneyInTransaction = float.Parse(contentofFileSplit[i + 3]);
                     }
                     catch
                     {
-
                     }
                     // if they are not in the dictionary, add them
                     if (accountNameAndMoney.ContainsKey(contentofFileSplit[i]) == false)
@@ -35,12 +31,10 @@ namespace SupportBank
                     {
                         accountNameAndMoney.Add(contentofFileSplit[i + 1], 0);
                     }
-
                     // update their accounts
-                    accountNameAndMoney[contentofFileSplit[i]] = accountNameAndMoney[contentofFileSplit[i]] + temp;
-                    accountNameAndMoney[contentofFileSplit[i + 1]] = accountNameAndMoney[contentofFileSplit[i + 1]] - temp;
+                    accountNameAndMoney[contentofFileSplit[i]] = accountNameAndMoney[contentofFileSplit[i]] + moneyInTransaction;
+                    accountNameAndMoney[contentofFileSplit[i + 1]] = accountNameAndMoney[contentofFileSplit[i + 1]] - moneyInTransaction;
                 }
-
             }
             return accountNameAndMoney;
         }

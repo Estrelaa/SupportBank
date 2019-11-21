@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SupportBank
@@ -12,11 +10,11 @@ namespace SupportBank
             string[] match = { "" };
             float AccountTotal = 0;
 
-            foreach (string element in contentsOfFile)
+            foreach (string Line in contentsOfFile)
             {
-                if (Regex.IsMatch(element, @"" + accountNameTofind + ""))
+                if (Regex.IsMatch(Line, @"" + accountNameTofind + ""))
                 {
-                    match = element.Split(",");
+                    match = Line.Split(",");
 
                     if (match[1] == accountNameTofind)
                     {
@@ -31,7 +29,7 @@ namespace SupportBank
                 }
             }
             Console.WriteLine("");
-            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, AccountTotal);
+            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, Math.Round(AccountTotal, 2));
         }
     }
 }
