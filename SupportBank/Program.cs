@@ -8,13 +8,17 @@ namespace SupportBank
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            //Variables needed
-            List<string> contentofFileWhenSplit = new List<string>();
-            Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
-            string accountNameTofind = "";
 
+            // init classes
+            parseListAll parseListAll = new parseListAll();
+            
+
+            //Variables needed           
+            string accountNameTofind = "";
+            List<string> contentofFileWhenSplit = new List<string>();
 
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             string[] contentsOfFile = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv");
@@ -25,38 +29,12 @@ namespace SupportBank
             contentofFileWhenSplit = convertContentsToOneString.Split(",").ToList();
 
             //Run List All function
-            parseContentForValues(contentofFileWhenSplit, 1, accountNameAndMoney);
+            parseListAll.parseContentForValues(contentofFileWhenSplit, 1, parseListAll.accountNameAndMoney);
 
             //Output to the console
-            OutputData(accountNameAndMoney, accountNameTofind, contentsOfFile);
-        }
+            OutputData(parseListAll.accountNameAndMoney, accountNameTofind, contentsOfFile);
+    }
 
-        private static void findTransactonsForOnePerson(string accountNameTofind, string[] contentsOfFile)
-        {
-            string[] match = { "" };
-            float AccountTotal = 0;
-
-            foreach (string element in contentsOfFile)
-            {
-                if (Regex.IsMatch(element, @"" + accountNameTofind + ""))
-                {
-                    match = element.Split(",");
-
-                    if (match[1] == accountNameTofind)
-                    {
-                        Console.WriteLine("{0} owes £{1} to {2} because of {3} on {4} ", match[1], match[4], match[2], match[3], match[0]);
-                        AccountTotal = AccountTotal - float.Parse(match[4]);
-                    }
-                    else
-                    {
-                        Console.WriteLine("{0} is owed £{1} from {2} because of {3} on {4} ", match[2], match[4], match[1], match[3], match[0]);
-                        AccountTotal = AccountTotal + float.Parse(match[4]);
-                    }
-                }
-            }
-            Console.WriteLine("");
-            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, AccountTotal);
-        }
 
         private static void OutputData(Dictionary<string, float> accountNameAndMoney, string accountNameTofind, string[] contentsOfFile)
         {
@@ -85,7 +63,7 @@ namespace SupportBank
                     Console.WriteLine("");
                     Console.WriteLine("Input the account name you are looking for:");
                     accountNameTofind = Console.ReadLine();
-                    findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
+                    ParseTransactionsOfOnePerson.FindTransactonsForOnePerson(accountNameTofind, contentsOfFile);
                     break;
                 }
 
@@ -114,41 +92,6 @@ namespace SupportBank
             }
             //Stops the console from closing
             Console.ReadLine();
-        }
-
-        private static void parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
-            Dictionary<string, float> accountNameAndMoney)
-        {
-            for (int i = 0; i < contentofFileSplit.Count; i++)
-            {
-                float temp = 0;
-                if (i % 5 == FromColumNumber)
-                {
-                    //try to get the money of this transaction, convert it to a float and save it.
-                    try
-                    {
-                        temp = float.Parse(contentofFileSplit[i + 3]);
-                    }
-                    catch
-                    {
-
-                    }
-                    // if they are not in the dictionary, add them
-                    if (accountNameAndMoney.ContainsKey(contentofFileSplit[i]) == false)
-                    {
-                        accountNameAndMoney.Add(contentofFileSplit[i], 0);
-                    }
-                    if (accountNameAndMoney.ContainsKey(contentofFileSplit[i + 1]) == false)
-                    {
-                        accountNameAndMoney.Add(contentofFileSplit[i + 1], 0);
-                    }
-
-                    // update their accounts
-                    accountNameAndMoney[contentofFileSplit[i]] = accountNameAndMoney[contentofFileSplit[i]] + temp;
-                    accountNameAndMoney[contentofFileSplit[i + 1]] = accountNameAndMoney[contentofFileSplit[i + 1]] - temp;
-                }
-
-            }
         }
     }
 }
