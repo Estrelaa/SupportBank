@@ -19,7 +19,6 @@ namespace SupportBank
             contentsOfFile = contentsOfFiletemp.ToArray();
 
             string convertContentsToOneString = string.Join(",", contentsOfFile);
-            convertContentsToOneString = string.Join(",", contentsOfFile);
 
             //Split the long string so every value in the .csv is its own element
             contentofFileWhenSplit = convertContentsToOneString.Split(",").ToList();
