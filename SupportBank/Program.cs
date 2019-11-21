@@ -13,7 +13,7 @@ namespace SupportBank
             //Variables needed
             List<string> contentofFileWhenSplit = new List<string>();
             Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
-            string accountNameTofind = "Jon A";
+            string accountNameTofind = "";
 
 
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
@@ -60,7 +60,8 @@ namespace SupportBank
 
         private static void OutputData(Dictionary<string, float> accountNameAndMoney, string accountNameTofind, string[] contentsOfFile)
         {
-            string userInput;
+            string userInput = "";
+            //The loop ensures that if the input is wrong then the user can try again without exiting the program
             while (true)
             {
                 Console.WriteLine("Commands are: ");
@@ -71,37 +72,44 @@ namespace SupportBank
                 try
                 {
                     userInput = Console.ReadLine();
-                    break;
                 }
+                //to make sure numbers and symbols don't crash the program
                 catch (IOException)
                 {
-                    Console.WriteLine("Invaild input, only 'List All' and 'List[Name of person you are looking for] are vaild!");
+                    Console.WriteLine("Invaild input, only 'List All' and 'Account Transactions' are vaild!");
                 }
-            }
 
-            //Run the code that will work out all of the transactions for one person in detail, then print them
-            if (userInput == "Account Transactions")
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Input the account name you are looking for:");
-                accountNameTofind = Console.ReadLine();
-                findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
-            }
-
-            // Give a overview of the total balance of everyone
-            if (userInput == "List All")
-            {
-                Console.WriteLine("");
-                foreach (KeyValuePair<string, float> key in accountNameAndMoney)
+                //Run the code that will work out all of the transactions for one person in detail, then print them
+                if (userInput == "Account Transactions")
                 {
-                    if (key.Value > -0)
+                    Console.WriteLine("");
+                    Console.WriteLine("Input the account name you are looking for:");
+                    accountNameTofind = Console.ReadLine();
+                    findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
+                    break;
+                }
+
+                // Give a overview of the total balance of everyone
+                if (userInput == "List All")
+                {
+                    Console.WriteLine("");
+                    foreach (KeyValuePair<string, float> key in accountNameAndMoney)
                     {
-                        Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
+                        if (key.Value > -0)
+                        {
+                            Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
+                        }
+                        else
+                        {
+                            Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
-                    }
+                    break;
+                }
+                // if the commands are wrong, give an error and stay in the loop
+                else
+                {
+                    Console.WriteLine("Invaild input, only 'List All' and 'Account Transactions' are vaild!");
                 }
             }
             //Stops the console from closing
@@ -116,6 +124,7 @@ namespace SupportBank
                 float temp = 0;
                 if (i % 5 == FromColumNumber)
                 {
+                    //try to get the money of this transaction, convert it to a float and save it.
                     try
                     {
                         temp = float.Parse(contentofFileSplit[i + 3]);
