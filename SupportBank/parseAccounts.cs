@@ -10,7 +10,7 @@ namespace SupportBank
         public static Dictionary<string, float> CreateAccounts(List<string> contentofFileSplit, int FromColumNumber,
             Dictionary<string, float> accountNameAndMoney)
         {
-            for (int i = 0; i < contentofFileSplit.Count; i++)
+            for (int i = 3; i < contentofFileSplit.Count; i++)
             {
                 float moneyInTransaction = 0;
                 if (i % 5 == FromColumNumber)
