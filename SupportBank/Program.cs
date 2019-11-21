@@ -16,31 +16,34 @@ namespace SupportBank
             string userInput = "";
             string accountNameTofind = "Jon A";
 
+
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             string[] contentsOfFile = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv");
             string convertContentsToOneString = string.Join(",", contentsOfFile);
+            contentsOfFile.ToList();
 
             //Split the long string so every value in the .csv is its own element
             contentofFileWhenSplit = convertContentsToOneString.Split(",").ToList();
 
-            //Run parser
+            //Run parsers
             parseContentForValues(contentofFileWhenSplit, 1, accountNameAndMoney);
-
-
-
-
-            //Regex to find the given name in the file
-            Regex findAccountName = new Regex(@"" + accountNameTofind + "", RegexOptions.IgnoreCase);
-
-            foreach (Match nameFoundInTransaction in findAccountName.Matches(contentsOfFile.ToString()))
-            {
-                Console.WriteLine("match found");
-            }
+            findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
 
 
             //Output to the console
             userInput = OutputData(accountNameAndMoney);
 
+        }
+
+        private static void findTransactonsForOnePerson(string accountNameTofind, string[] contentsOfFile)
+        {
+            foreach (string element in contentsOfFile)
+            {
+                if (Regex.IsMatch(element, @"" + accountNameTofind + ""))
+                {
+                    string[] match = element.Split();
+                }
+            }
         }
 
         private static string OutputData(Dictionary<string, float> accountNameAndMoney)
@@ -66,6 +69,14 @@ namespace SupportBank
 
             Console.WriteLine("");
 
+            ListAllOutput(accountNameAndMoney, userInput);
+            //Stops the console from closing
+            Console.ReadLine();
+            return userInput;
+        }
+
+        private static void ListAllOutput(Dictionary<string, float> accountNameAndMoney, string userInput)
+        {
             if (userInput == "List All")
             {
                 foreach (KeyValuePair<string, float> key in accountNameAndMoney)
@@ -82,9 +93,6 @@ namespace SupportBank
 
 
             }
-            //Stops the console from closing
-            Console.ReadLine();
-            return userInput;
         }
 
         private static void parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
