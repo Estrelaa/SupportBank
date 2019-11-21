@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace SupportBank
 {
-    class ParseTransactionsOfOnePerson
+    class ParseTransactions
     {
-        public static void FindTransactonsForOnePerson(string accountNameTofind, string[] contentsOfFile)
+        public static void FindAccountTransactions(string accountNameTofind, string[] contentsOfFile)
         {
             string[] match = { "" };
             float AccountTotal = 0;

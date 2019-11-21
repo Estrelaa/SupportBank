@@ -13,6 +13,7 @@ namespace SupportBank
             //The loop ensures that if the input is wrong then the user can try again without exiting the program
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Commands are: ");
                 Console.WriteLine("List All: output the names of each person, and the total amount they owe, or are owed.");
                 Console.WriteLine("Account Transactions: print a list of every transaction, with the date and narrative, for that account.");
@@ -22,7 +23,7 @@ namespace SupportBank
                 {
                     userInput = Console.ReadLine();
                 }
-                //to make sure numbers and symbols don't crash the program
+                //to make sure numbers and symbols don't crash the program as userInput is a string
                 catch (IOException)
                 {
                     Console.WriteLine("Invaild input, only 'List All' and 'Account Transactions' are vaild!");
@@ -34,8 +35,10 @@ namespace SupportBank
                     Console.WriteLine("");
                     Console.WriteLine("Input the account name you are looking for:");
                     accountNameTofind = Console.ReadLine();
-                    ParseTransactionsOfOnePerson.FindTransactonsForOnePerson(accountNameTofind, contentsOfFile);
-                    break;
+                    ParseTransactions.FindAccountTransactions(accountNameTofind, contentsOfFile);
+
+                    //Stops the console from closing
+                    Console.ReadLine();
                 }
 
                 // Give a overview of the total balance of everyone
@@ -54,7 +57,8 @@ namespace SupportBank
                             Console.WriteLine("{0} is £{1} in debt ", key.Key, Math.Round(key.Value, 2) * -1); //Makes the number posative
                         }
                     }
-                    break;
+                    //Stops the console from closing
+                    Console.ReadLine();
                 }
                 // if the commands are wrong, give an error and stay in the loop
                 else
@@ -62,8 +66,6 @@ namespace SupportBank
                     Console.WriteLine("Invaild input, only 'List All' and 'Account Transactions' are vaild!");
                 }
             }
-            //Stops the console from closing
-            Console.ReadLine();
         }
     }
 }

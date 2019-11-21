@@ -4,12 +4,12 @@ using System.Text;
 
 namespace SupportBank
 {
-    class parseListAll
+    class parseAccounts
     {
         // Variables For the method to run        
         public Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
 
-        public static Dictionary<string, float> parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
+        public static Dictionary<string, float> CreateAccounts(List<string> contentofFileSplit, int FromColumNumber,
             Dictionary<string, float> accountNameAndMoney)
         {
             for (int i = 0; i < contentofFileSplit.Count; i++)

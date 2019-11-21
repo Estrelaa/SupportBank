@@ -7,15 +7,15 @@ namespace SupportBank
         static void Main(string[] args)
         {
             // init classes if needed
-            parseListAll parseListAll = new parseListAll();
+            parseAccounts parseListAll = new parseAccounts();
              
-            //Variables needed        
+            //Variables needed that are not part of a class     
             string accountNameTofind = "";
             List<string> contentofFileWhenSplit = new List<string>();
 
             // Read the files and create accounts
             ReadFiles.ReadCSV(out contentofFileWhenSplit, out string[] contentsOfFile);
-            parseListAll.parseContentForValues(contentofFileWhenSplit, 1, parseListAll.accountNameAndMoney);
+            parseAccounts.CreateAccounts(contentofFileWhenSplit, 1, parseListAll.accountNameAndMoney);
 
             //Output to the console
             DisplayToConsole.OutputData(parseListAll.accountNameAndMoney, accountNameTofind, contentsOfFile);
