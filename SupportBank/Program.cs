@@ -13,7 +13,6 @@ namespace SupportBank
             //Variables needed
             List<string> contentofFileWhenSplit = new List<string>();
             Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
-            string userInput = "";
             string accountNameTofind = "Jon A";
 
 
@@ -25,35 +24,48 @@ namespace SupportBank
             //Split the long string so every value in the .csv is its own element
             contentofFileWhenSplit = convertContentsToOneString.Split(",").ToList();
 
-            //Run parsers
+            //Run List All function
             parseContentForValues(contentofFileWhenSplit, 1, accountNameAndMoney);
-            findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
-
 
             //Output to the console
-            userInput = OutputData(accountNameAndMoney);
-
+            OutputData(accountNameAndMoney, accountNameTofind, contentsOfFile);
         }
 
         private static void findTransactonsForOnePerson(string accountNameTofind, string[] contentsOfFile)
         {
+            string[] match = { "" };
+            float AccountTotal = 0;
+
             foreach (string element in contentsOfFile)
             {
                 if (Regex.IsMatch(element, @"" + accountNameTofind + ""))
                 {
-                    string[] match = element.Split();
+                    match = element.Split(",");
+
+                    if (match[1] == accountNameTofind)
+                    {
+                        Console.WriteLine("{0} owes £{1} to {2} because of {3} on {4} ", match[1], match[4], match[2], match[3], match[0]);
+                        AccountTotal = AccountTotal - float.Parse(match[4]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} is owed £{1} from {2} because of {3} on {4} ", match[2], match[4], match[1], match[3], match[0]);
+                        AccountTotal = AccountTotal + float.Parse(match[4]);
+                    }
                 }
             }
+            Console.WriteLine("");
+            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, AccountTotal);
         }
 
-        private static string OutputData(Dictionary<string, float> accountNameAndMoney)
+        private static void OutputData(Dictionary<string, float> accountNameAndMoney, string accountNameTofind, string[] contentsOfFile)
         {
             string userInput;
             while (true)
             {
                 Console.WriteLine("Commands are: ");
                 Console.WriteLine("List All: output the names of each person, and the total amount they owe, or are owed.");
-                Console.WriteLine("List [Name Of Person]: print a list of every transaction, with the date and narrative, for that account with that name.");
+                Console.WriteLine("Account Transactions: print a list of every transaction, with the date and narrative, for that account.");
                 Console.WriteLine("");
                 Console.WriteLine("Input command: ");
                 try
@@ -67,18 +79,19 @@ namespace SupportBank
                 }
             }
 
-            Console.WriteLine("");
+            //Run the code that will work out all of the transactions for one person in detail, then print them
+            if (userInput == "Account Transactions")
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Input the account name you are looking for:");
+                accountNameTofind = Console.ReadLine();
+                findTransactonsForOnePerson(accountNameTofind, contentsOfFile);
+            }
 
-            ListAllOutput(accountNameAndMoney, userInput);
-            //Stops the console from closing
-            Console.ReadLine();
-            return userInput;
-        }
-
-        private static void ListAllOutput(Dictionary<string, float> accountNameAndMoney, string userInput)
-        {
+            // Give a overview of the total balance of everyone
             if (userInput == "List All")
             {
+                Console.WriteLine("");
                 foreach (KeyValuePair<string, float> key in accountNameAndMoney)
                 {
                     if (key.Value > -0)
@@ -90,9 +103,9 @@ namespace SupportBank
                         Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
                     }
                 }
-
-
             }
+            //Stops the console from closing
+            Console.ReadLine();
         }
 
         private static void parseContentForValues(List<string> contentofFileSplit, int FromColumNumber,
