@@ -42,15 +42,16 @@ namespace SupportBank
                 if (userInput == "List All")
                 {
                     Console.WriteLine("");
+                    //For each account, saythe status of their account. We round up the values to 2 D.P. here to make it look nicer
                     foreach (KeyValuePair<string, float> key in accountNameAndMoney)
                     {
-                        if (key.Value > -0)
+                        if (key.Value > 0)
                         {
-                            Console.WriteLine("{0} are owned £{1}", key.Key, key.Value);
+                            Console.WriteLine("{0} should be paid £{1}", key.Key,Math.Round(key.Value, 2));
                         }
                         else
-                        {
-                            Console.WriteLine("{0} owe £{1}", key.Key, key.Value);
+                        {                         
+                            Console.WriteLine("{0} is £{1} in debt ", key.Key, Math.Round(key.Value, 2) * -1); //Makes the number posative
                         }
                     }
                     break;

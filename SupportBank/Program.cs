@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
 
 namespace SupportBank
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             // init classes if needed
@@ -25,6 +20,5 @@ namespace SupportBank
             //Output to the console
             DisplayToConsole.OutputData(parseListAll.accountNameAndMoney, accountNameTofind, contentsOfFile);
         }
-
     }
 }
