@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NLog;
 
 namespace SupportBank
 {
@@ -8,7 +9,6 @@ namespace SupportBank
     {
         public static void ReadCSV(out List<string> contentofFileWhenSplit, out string[] contentsOfFile)
         {
-
             //Open the .csv file, save it as a array then join it into 1 long string to get rid of all the \n's
             List<string> contentsOfFiletemp = new List<string>();
 

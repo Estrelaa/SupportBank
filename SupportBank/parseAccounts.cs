@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using NLog;
 
 namespace SupportBank
 {
     class ParseAccounts
     {
+        //Enable Logging on this class 
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         // Variables For the method to run        
         public Dictionary<string, float> accountNameAndMoney = new Dictionary<string, float>();
 
