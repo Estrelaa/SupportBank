@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using NLog;
 
 namespace SupportBank
 {
     class CreateTransactions
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         public static void FindAccountTransactions(string accountNameTofind, string[] contentsOfFile)
         {
             string[] match = { "" };
@@ -15,7 +18,7 @@ namespace SupportBank
                 if (Regex.IsMatch(Line, @"" + accountNameTofind + ""))
                 {
                     match = Line.Split(",");
-                    //TODO: Add try/catch to deal with "One Cheeseburger" in the amount colum becausing of ******* Ben
+
                     if (match[1] == accountNameTofind)
                     {
                         try
@@ -26,6 +29,7 @@ namespace SupportBank
                         catch (FormatException)
                         {
                             Console.WriteLine("A Value in this transaction is in a invaild format, skipping...");
+                            Logger.Error("Transaction failed to be added: £{0} from {1} to {2} because of {3} on {4}", match[4], match[1], match[2], match[3], match[0]);
                         }
                     }
                     else
@@ -38,6 +42,7 @@ namespace SupportBank
                         catch (FormatException)
                         {
                             Console.WriteLine("A Value in this transaction is in a invaild format, skipping...");
+                            Logger.Error("Transaction failed to be added: £{0} from {1} to {2} because of {3} on {4}", match[4], match[1], match[2], match[3], match[0]);
                         }
                     }
                 }
