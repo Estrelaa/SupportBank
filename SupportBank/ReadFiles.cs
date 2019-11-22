@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace SupportBank
 {
@@ -13,6 +14,7 @@ namespace SupportBank
 
             contentsOfFiletemp = File.ReadAllLines("C:\\Work\\Training\\SupportBank\\Transactions2014.csv").ToList();
             contentsOfFiletemp.AddRange(File.ReadAllLines("C:\\Work\\Training\\SupportBank\\DodgyTransactions2015.csv").ToList());
+            JsonConvert.DeserializeObject("C:\\Work\\Training\\SupportBank\\Transactions2013.json");
             contentsOfFile = contentsOfFiletemp.ToArray();
 
             string convertContentsToOneString = string.Join(",", contentsOfFile);
