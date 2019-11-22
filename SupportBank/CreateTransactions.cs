@@ -8,7 +8,7 @@ namespace SupportBank
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        public static void AccountTransactions(string accountNameTofind, string[] contentsOfFile)
+        public static void Transactions(string accountNameTofind, string[] contentsOfFile)
         {
             string[] match = { "" };
             float AccountTotal = 0;
