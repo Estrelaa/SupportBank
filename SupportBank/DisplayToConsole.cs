@@ -34,7 +34,7 @@ namespace SupportBank
                     Console.WriteLine("");
                     Console.WriteLine("Input the account name you are looking for:");
                     accountNameTofind = Console.ReadLine();
-                    ParseTransactions.FindAccountTransactions(accountNameTofind, contentsOfFile);
+                    CreateTransactions.FindAccountTransactions(accountNameTofind, contentsOfFile);
 
                     //Stops the console from closing
                     Console.ReadLine();

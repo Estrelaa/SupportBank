@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SupportBank
 {
-    class ParseTransactions
+    class CreateTransactions
     {
         public static void FindAccountTransactions(string accountNameTofind, string[] contentsOfFile)
         {
