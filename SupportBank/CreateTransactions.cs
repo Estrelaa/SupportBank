@@ -29,7 +29,7 @@ namespace SupportBank
                 }
             }
             Console.WriteLine("");
-            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, Math.Round(AccountTotal, 2));
+            Console.WriteLine("{0} has a total balance of: £{1}", accountNameTofind, Math.Round(AccountTotal, 2) * -1);
         }
     }
 }
