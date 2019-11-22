@@ -25,6 +25,7 @@ namespace SupportBank
                     }
                     catch
                     {
+                        Logger.Error("Format Error: the value '{0}' could not covert to a float", contentofFileSplit[i + 3]);
                     }
                     // if they are not in the dictionary, add them
                     if (accountNameAndMoney.ContainsKey(contentofFileSplit[i]) == false)
