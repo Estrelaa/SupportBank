@@ -31,33 +31,13 @@ namespace SupportBank
                 //Run the code that will work out all of the transactions for one person in detail, then print them
                 if (userInput == "Account Transactions")
                 {
-                    Console.WriteLine("");
-                    Console.WriteLine("Input the account name you are looking for:");
-                    accountNameTofind = Console.ReadLine();
-                    CreateTransactions.FindAccountTransactions(accountNameTofind, contentsOfFile);
-
-                    //Stops the console from closing
-                    Console.ReadLine();
+                    accountNameTofind = TransactionsOutput(contentsOfFile);
                 }
 
                 // Give a overview of the total balance of everyone
                 if (userInput == "List All")
                 {
-                    Console.WriteLine("");
-                    //For each account, saythe status of their account. We round up the values to 2 D.P. here to make it look nicer
-                    foreach (KeyValuePair<string, float> key in accountNameAndMoney)
-                    {
-                        if (key.Value > 0)
-                        {
-                            Console.WriteLine("{0} should be paid £{1}", key.Key,Math.Round(key.Value, 2));
-                        }
-                        else
-                        {                         
-                            Console.WriteLine("{0} is £{1} in debt ", key.Key, Math.Round(key.Value, 2) * -1); //Makes the number posative
-                        }
-                    }
-                    //Stops the console from closing
-                    Console.ReadLine();
+                    ListAll(accountNameAndMoney);
                 }
                 // if the commands are wrong, give an error and stay in the loop
                 else
@@ -65,6 +45,38 @@ namespace SupportBank
                     Console.WriteLine("Invaild input, only 'List All' and 'Account Transactions' are vaild!");
                 }
             }
+        }
+
+        private static string TransactionsOutput(string[] contentsOfFile)
+        {
+            string accountNameTofind;
+            Console.WriteLine("");
+            Console.WriteLine("Input the account name you are looking for:");
+            accountNameTofind = Console.ReadLine();
+            CreateTransactions.AccountTransactions(accountNameTofind, contentsOfFile);
+
+            //Stops the console from closing
+            Console.ReadLine();
+            return accountNameTofind;
+        }
+
+        private static void ListAll(Dictionary<string, float> accountNameAndMoney)
+        {
+            Console.WriteLine("");
+            //For each account, saythe status of their account. We round up the values to 2 D.P. here to make it look nicer
+            foreach (KeyValuePair<string, float> key in accountNameAndMoney)
+            {
+                if (key.Value > 0)
+                {
+                    Console.WriteLine("{0} should be paid £{1}", key.Key, Math.Round(key.Value, 2));
+                }
+                else
+                {
+                    Console.WriteLine("{0} is £{1} in debt ", key.Key, Math.Round(key.Value, 2) * -1); //Makes the number posative
+                }
+            }
+            //Stops the console from closing
+            Console.ReadLine();
         }
     }
 }
